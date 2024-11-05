@@ -68,8 +68,8 @@ const Sidebar = ({ children, className, id, admin }) => {
       <HoverCardContent className="w-80 bg-primary">
         <div className="flex justify-between space-x-4">
           <Avatar>
-            <AvatarImage src="https://github.com/vercel.png" />
-            <AvatarFallback>VC</AvatarFallback>
+            {/* <AvatarImage src="https://github.com/vercel.png" /> */}
+            <AvatarFallback className="capitalize text-2xl">{admin?.email.charAt()}</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
             <h4 className="text-sm font-semibold text-white">Admin</h4>
@@ -113,6 +113,7 @@ const Sidebar = ({ children, className, id, admin }) => {
           </div>
 
           {/* Bottom part */}
+        </div>
           <div className='flex-1 mt-[100%]'>
           <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -133,7 +134,6 @@ const Sidebar = ({ children, className, id, admin }) => {
           </AlertDialog>
             <h2>FAQ</h2>
           </div>
-        </div>
       </div>
 
       <div className='w-4/5 flex h-screen'>

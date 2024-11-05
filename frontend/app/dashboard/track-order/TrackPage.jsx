@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import Sidebar from '../Sidebar'
 import GoogleMapComponent from '@/components/GoogleMapComponent'
 import GoogleMapRouteComponent from '@/components/GoogleMapRouteComponent'
 

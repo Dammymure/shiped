@@ -56,7 +56,7 @@ const TrackOrder = () => {
   };
 
   return (
-    <Sidebar>
+    <Sidebar user={user}>
       <div className='w-screen h-screen'>
         {openTracking ? (
           <TrackPage data={orderData} />

@@ -110,7 +110,7 @@ const PlaceOrder = () => {
   };
 
   return (
-    <Sidebar>
+    <Sidebar >
       <div className="grid grid-cols-2 w-full">
         <div className="w-full p-4 h-screen bg-light rounded-md shadow-md">
           <div className='bg-white p-4 rounded-md'>

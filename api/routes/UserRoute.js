@@ -23,7 +23,7 @@ router.post("/auth/logout", verifyToken, LogOutUser)
 router.post("/profile", LogOutUser)
 
 // Edit profile
-router.patch("/profile", verifyToken, UpdateProfile)
+router.put("/update", verifyToken, UpdateProfile)
 
 
 // place delivery order

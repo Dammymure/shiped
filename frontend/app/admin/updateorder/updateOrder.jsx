@@ -1,8 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import Sidebar from '../Sidebar'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { RocketIcon } from '@radix-ui/react-icons'

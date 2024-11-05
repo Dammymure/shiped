@@ -89,36 +89,44 @@ export const GetUserProfile = async ( req, res) => {
 //   UPDATE PROFILE
 export const UpdateProfile = async (req, res) => {
   const user = req.user;
-  const { firstname, lastname, address, phone } = req.body;
+  
+  if (!user) {
+    console.log('Unauthorized User');
+    return res.status(401).json({ message: 'Unauthorized User' });
+  }
+
+  const { firstname, lastname, address, phone, email } = req.body;
+  console.log('Request data:', { firstname, lastname, address, phone, email });
 
   try {
-      if (user) {
-          const profile = await User.findById(user.id);
+    const profile = await User.findById(user.user._id);
+    if (!profile){
+      console.log('user not found');
+      return res.status(404).json({ message: 'User not found' }) 
+    } 
+    ; 
 
-          if (profile) {
-              // Update only the fields that are provided in the request body
-              if (firstname) profile.firstname = firstname;
-              if (lastname) profile.lastname = lastname;
-              if (address) profile.address = address;
-              if (phone) profile.phone = phone;
+    // Update fields only if provided
+    Object.assign(profile, { 
+      firstname: firstname ?? profile.firstname, 
+      lastname: lastname ?? profile.lastname, 
+      address: address ?? profile.address, 
+      phone: phone ?? profile.phone, 
+      email: email ?? profile.email 
+    });
 
-              // Save the updated profile
-              await profile.save();
+    await profile.save();
 
-              res.status(200).json({
-                  message: 'Profile updated successfully',
-                  profile
-              });
-          } else {
-              res.status(404).json({ message: 'User not found' });
-          }
-      } else {
-          res.status(401).json({ message: 'Unauthorized access' });
-      }
+    res.status(200).json({
+      message: 'Profile updated successfully',
+      profile,
+    });
   } catch (error) {
-      res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Server error:', error.message);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
 
 
 // PLACE/create DELIVERY ORDER

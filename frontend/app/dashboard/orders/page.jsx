@@ -49,7 +49,7 @@ const Orders = () => {
   const pending = orders.filter(order => order.status === 'pending');
 
   return (
-    <Sidebar>
+    <Sidebar user={user}>
 
       <div className='flex w-full'>
         <div className=' bg-light p-4 w-2/5'>

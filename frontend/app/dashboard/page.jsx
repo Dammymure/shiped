@@ -38,12 +38,12 @@ const Dashboard = () => {
   }
 
   const ongoing = orders.filter(order => order.status === 'ongoing').length;
-  const completed = orders.filter(order => order.status === 'completed').length;
+  const complete = orders.filter(order => order.status === 'complete').length;
   const pending = orders.filter(order => order.status === 'pending').length;
 
   return (
     <div className='flex flex-row'>
-      <Sidebar className="overflow-hidde">
+      <Sidebar user={user} className="overflow-hidde">
         <div className='w-2/5 h-screen p-5 bg-light flex flex-col justify-betwee'>
           <h1 className='text-3xl font-semibold'>Shipment Orders</h1>
           <div className='max-h-screen overflow-y-auto'>
@@ -81,7 +81,7 @@ const Dashboard = () => {
           {/* STATISTICS */}
           <StatWidget 
             ongoing={ongoing} 
-            completed={completed} 
+            complete={complete} 
             pending={pending} 
           />
 

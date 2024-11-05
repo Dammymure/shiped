@@ -33,11 +33,8 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
 
 
-const Sidebar = ({ children, className }) => {
-  const { user, isLoading } = useUser();
-  if (isLoading) {
-    return <p>Loading user data...</p>;
-  }
+const Sidebar = ({ children, className, user }) => {
+
   const router = useRouter();  // Keep useRouter inside the component
 
   const pathname = usePathname(); // Get the current route path
@@ -61,13 +58,12 @@ const handleLogout = () => {
 <HoverCard>
       <HoverCardTrigger asChild>
       <div className='flex flex-row items-center gap-2 border-y-[1px] py-3 border-slate-500'>
-          <i className='bg-secondary w-10 h-10 rounded-full'>
-            <h1>{user.firstname.charAt(0)}</h1>
-            <h1>{user.lastname.charAt(0)}</h1>
-          </i>
+          <div className='bg-secondary p-2 rounded-full flex items-center'>
+            <h1 className='capitalize text-xl'>{user?.firstname.charAt(0)} {user?.lastname.charAt(0)}</h1>
+          </div>
           <div className='flex flex-col leading-5'>
-          <p>{user.firstname} {user.lastname}</p>
-          <p className='text-slate-500 text-sm'>{user.email}</p>
+          <p>{user?.firstname} {user?.lastname}</p>
+          <p className='text-slate-500 text-sm'>{user?.email}</p>
           </div>
         </div>
       </HoverCardTrigger>
@@ -137,11 +133,19 @@ const handleLogout = () => {
                 >
                   Track Order
                 </Link>
+                <Link
+                  href='/dashboard/profile'
+                  className={`hover:bg-secondary hover:text-primary px-2 py-2 rounded-md ${
+                    pathname === '/dashboard/profile' ? 'bg-secondary text-primary' : ''
+                  } `}
+                >
+                  Profile
+                </Link>
             </ul>
           </div>
 
           {/* Bottom part */}
-          <div className='flex-1 mt-[100%]'>
+          <div className='flex-1 mt-[80%]'>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <p className='cursor-pointer' variant="outline">Logout</p>
