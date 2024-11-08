@@ -18,29 +18,32 @@ const LoginAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     const userdetails = { email, password };
-
-    const res = await fetch('http://localhost:8000/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userdetails),
-    });
-
-    const data = await res.json();
-
-
-    if (res.status === 200) {
-      Cookies.set('admintoken', data.token, { expires: 7});
-      router.push('/admin'); 
-      // localStorage.set('admintoken', data.token, { expires: 7 }); // Set cookie expiration
-      // localStorage.setItem("token", data.token);
-
-
+  
+    try {
+      const res = await fetch('http://localhost:8000/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userdetails),
+      });
+  
+      const data = await res.json();
+  
+      if (res.ok) { // Use res.ok to check for a successful response
+        router.push('/admin'); // Redirect to the orders page
+        Cookies.set('admintoken', data.token, { expires: 7 });
+      } else {
+        console.error('Login failed:', data.message || 'Unexpected error');
+        // Optionally, show an error message to the user
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
+  
 
   return (
     <Card>
@@ -82,6 +85,7 @@ const LoginAdmin = () => {
           {isLoading ? 'Login...' : 'Login'}
         </Button>
       </CardFooter>
+      <p onClick={()=> router.push('/create-account')} className="cursor-pointer text-blue-700 text-sm pl-5 pb-5">Don't have an account? Create an account</p>
     </Card>
   );
 };

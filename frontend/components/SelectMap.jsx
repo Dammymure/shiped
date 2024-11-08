@@ -47,18 +47,24 @@ const MapComponent = ({ onLocationChange }) => {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search for current location"
-        onBlur={(e) => handleSearch(e.target.value, 'current')}
-      />
-      <input
-        type="text"
-        placeholder="Search for delivery location"
-        onBlur={(e) => handleSearch(e.target.value, 'delivery')}
-      />
 
-      <MapContainer center={[51.505, -0.09]} zoom={3} style={{ height: '400px', width: '100%' }}>
+      <div className='flex flex-col gap-3 w-1/2 pb-5'>
+        <input
+        className='"w-full p-2 border border-gray-400 rounded focus:outline-none focus:border-secondary focus:shadow-custom-purple focus:ring-1 focus:ring-secondary'
+          type="text"
+          placeholder="Search for current location"
+          onBlur={(e) => handleSearch(e.target.value, 'current')}
+        />
+        <input
+        className='"w-full p-2 border border-gray-400 rounded focus:outline-none focus:border-secondary focus:shadow-custom-purple focus:ring-1 focus:ring-secondary'
+          type="text"
+          placeholder="Search for delivery location"
+          onBlur={(e) => handleSearch(e.target.value, 'delivery')}
+        />
+
+      </div>
+
+      <MapContainer center={[51.505, -0.09]} zoom={3} style={{ height: '550px', width: '100%' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

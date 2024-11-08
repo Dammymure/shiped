@@ -10,8 +10,20 @@ import {
 } from "@/components/ui/alert"
 import { RocketIcon } from "@radix-ui/react-icons"
 import MapComponent from '@/components/SelectMap';
+import { useUser } from '@/app/Provider';
 
 const PlaceOrder = () => {
+  const { user, isLoading } = useUser();
+
+  if (isLoading) {
+    return <p>Loading user data...</p>;
+  }
+
+  if (!user) {
+    redirect('/');
+    return null;  // Ensure that the component doesn't continue rendering after redirect
+  }
+
   // SELECT LOCATION
   const [locations, setLocations] = useState({
     currentLocation: null,
@@ -30,7 +42,7 @@ const PlaceOrder = () => {
     price: 0,
     status: 'pending',
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isNowLoading, setIsLoading] = useState(false);
 
   // Calculate total cost when packages change
   useEffect(() => {
@@ -110,9 +122,9 @@ const PlaceOrder = () => {
   };
 
   return (
-    <Sidebar >
+    <Sidebar user={user}>
       <div className="grid grid-cols-2 w-full">
-        <div className="w-full p-4 h-screen bg-light rounded-md shadow-md">
+        <div className="w-full p-4 h-full bg-light rounded-md shadow-md">
           <div className='bg-white p-4 rounded-md'>
             <h1 className='text-2xl'>Create your order</h1>
             <form onSubmit={handleSubmit} className="py-4 w-full h-screen mx-auto">
@@ -176,8 +188,8 @@ const PlaceOrder = () => {
               <h1>1 naira/kg: {formData.price}</h1>
               <p onClick={addPackage} className="text-slate-800 text-center cursor-pointer p-2 rounded w-full mb-4">+ Add Another Package</p>
 
-              <button type="submit" className="bg-primary text-white p-2 rounded w-full hover:bg-primary/90" disabled={isLoading}>
-                {isLoading ? <span>Processing...</span> : 'Place Order'}
+              <button type="submit" className="bg-primary text-white p-2 rounded w-full hover:bg-primary/90" disabled={isNowLoading}>
+                {isNowLoading ? <span>Processing...</span> : 'Place Order'}
               </button>
 
               <div className="grid w-full place-items-center">
@@ -193,10 +205,13 @@ const PlaceOrder = () => {
           </div>
         </div>
 
-        <div className='w-full h-screen bg-custom-radial'>
+        <div className='w-full h-screen bg-light p-4'>
+          <div className='bg-white p-4 rounded-md'>
+
           <h1>Package Delivery</h1>
           <MapComponent onLocationChange={handleLocationChange} />
-          {locations.currentLocation && (
+          </div>
+          {/* {locations.currentLocation && (
             <div>
               <h2>Current Location Coordinates:</h2>
               <p>Latitude: {locations.currentLocation.lat}</p>
@@ -209,7 +224,7 @@ const PlaceOrder = () => {
               <p>Latitude: {locations.deliveryLocation.lat}</p>
               <p>Longitude: {locations.deliveryLocation.lng}</p>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </Sidebar>

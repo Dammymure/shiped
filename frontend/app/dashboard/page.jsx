@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useUser } from '../Provider';
 import { redirect } from 'next/navigation';
 import { getDeliveries } from '@/lib/utils';
+import Advert from '@/components/Advert';
 
 const Dashboard = () => {
   const { user, isLoading } = useUser();
@@ -24,10 +25,10 @@ const Dashboard = () => {
         console.error('Error fetching orders:', error);
       }
     };
-
+    
     fetchOrders();
   }, []);  // Empty dependency array ensures this runs once when the component mounts
-
+  
   if (isLoading) {
     return <p>Loading user data...</p>;
   }
@@ -86,14 +87,7 @@ const Dashboard = () => {
           />
 
           {/* ADVERT BOARD */}
-          <div className='h-2/5 w-full bg-slate-400'>
-            <div className='flex h-fit'>
-              <video className='h-full' height="900" autoPlay muted loop playsInline preload="auto">
-                <source src="/assets/ad.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
+            <Advert/>
         </div>
       </Sidebar>
     </div>

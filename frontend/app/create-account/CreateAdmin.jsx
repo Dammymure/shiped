@@ -8,55 +8,50 @@ import { Label } from '@/components/ui/label';
 import { useRouter } from "next/navigation"
 import React, { useState, useEffect } from 'react';
 
-const LoginUser = () => {
+const CreateAdmin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   
   const router = useRouter();  // Keep useRouter inside the component
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-  
+
     const userdetails = { email, password };
-  
-    try {
-      const res = await fetch('http://localhost:8000/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userdetails),
-      });
-  
-      const data = await res.json();
-  
-      if (res.status === 200) {
-        Cookies.set('token', data.token, { expires: 7 });
-  
-        // Conditionally redirect based on user details
-        if (!data.user.firstname || !data.user.lastname) {
-          router.push('/dashboard/profile');
-        } else {
-          router.push('/dashboard');
-        }
-      } else {
-        console.error('Login failed:', data.message);
-      }
-    } catch (error) {
-      console.error('An error occurred:', error);
-    } finally {
-      setIsLoading(false);
+
+    const res = await fetch('http://localhost:8000/admin/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userdetails),
+    });
+
+    // const data = await res.json();
+    if(res.status === 403){
+        alert('User already exists')
     }
+
+
+
+    if (res.status === 201) {
+        alert('Account successfully created')
+      router.push('/'); 
+      // localStorage.set('admintoken', data.token, { expires: 7 }); // Set cookie expiration
+      // localStorage.setItem("token", data.token);
+
+
+    }
+
+    setIsLoading(false);
   };
-  
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>User</CardTitle>
+        <CardTitle>Admin</CardTitle>
         <CardDescription>
-          Login to get started sending your packages.
+          Login Admin account.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
@@ -88,12 +83,12 @@ const LoginUser = () => {
           disabled={isLoading}
           onClick={handleSubmit}
         >
-          {isLoading ? 'Login...' : 'Login'}
+          {isLoading ? 'Creating...' : 'Create'}
         </Button>
       </CardFooter>
-      <p onClick={()=> router.push('/create-account')} className="cursor-pointer text-blue-700 text-sm pl-5 pb-5">Don't have an account? Create an account</p>
+      <p onClick={()=> router.push('/')} className="cursor-pointer text-blue-700 text-sm pl-5 pb-5">Already have an account? Log into your account</p>
     </Card>
   );
 };
 
-export default LoginUser;
+export default CreateAdmin;

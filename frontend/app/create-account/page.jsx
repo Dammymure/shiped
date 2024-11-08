@@ -1,16 +1,15 @@
-'use client'
+
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import LoginUser from "./LoginUser"
-import LoginAdmin from "./LoginAdmin"
-import { useRouter } from "next/navigation"
+import CreateUser from "./CreateUser"
+import CreateAdmin from "./CreateAdmin"
 
-const Home =  () => {
-  const router = useRouter();  // Keep useRouter inside the component
+const CreateAccount =  () => {
+      
 
   return (
     <div className="flex h-screen mx-auto items-center justify-center align-middle bg-secondary">
@@ -21,7 +20,7 @@ const Home =  () => {
         </TabsList>
         <TabsContent value="user">
 
-        <LoginUser/>
+        <CreateUser/>
         
         </TabsContent>
         <TabsContent value="admin">
@@ -46,12 +45,11 @@ const Home =  () => {
               <Button className="text-white">Login</Button>
             </CardFooter>
           </Card> */}
-          <LoginAdmin/>
+          <CreateAdmin/>
         </TabsContent>
-        
       </Tabs>
 
     </div>
   )
 }
-export default Home;
+export default CreateAccount;

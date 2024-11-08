@@ -14,6 +14,7 @@ import DefaultWidget from '@/components/DefaultWidget'
 import { useUser } from '@/app/Provider'
 import { redirect } from 'next/navigation'
 import { getDeliveries } from '@/lib/utils'
+import Advert from '@/components/Advert'
 
 
 
@@ -127,19 +128,9 @@ const Orders = () => {
 
         </div>
 
-        <div className='bg-lime-300 flex flex-col w-3/5 p-4 gap-y-4'>
-          <DefaultWidget className="text-center bg-custom-radial-2">
-                1
-          </DefaultWidget>
-
-          <DefaultWidget className="text-center bg-custom-radial">
-              2
-          </DefaultWidget>
-
-          <DefaultWidget className="text-center bg-custom-radial-3">
-              3
-          </DefaultWidget>
-            
+        <div className='bg-light flex flex-col w-3/5 p-4 gap-y-4 justify-around'>
+          <Advert height={'1/3'}/>
+          <Advert  height={'1/3'}/>
         </div>
 
       </div>

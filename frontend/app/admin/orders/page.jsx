@@ -5,7 +5,6 @@ import OrdersTable from './OrderTable';
 import { useUser } from '../../Provider';
 import { redirect } from 'next/navigation';
 import { getOrders } from '@/lib/utils';
-import Link from 'next/link';
 
 const Orders = () => {
   const { admin, isLoading } = useUser();
