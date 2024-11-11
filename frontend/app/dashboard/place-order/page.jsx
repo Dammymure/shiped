@@ -13,13 +13,12 @@ import MapComponent from '@/components/SelectMap';
 import { useUser } from '@/app/Provider';
 
 const PlaceOrder = () => {
-  const { user, isLoading } = useUser();  // Move the hook outside the condition
-
+  // Move the hook calls to the top level
+  const { user, isLoading } = useUser();
   const [locations, setLocations] = useState({
     currentLocation: null,
     deliveryLocation: null,
   });
-
   const [popUp, setPopUp] = useState(false);
   const [formData, setFormData] = useState({
     destination: '',
@@ -27,7 +26,6 @@ const PlaceOrder = () => {
     price: 0,
     status: 'pending',
   });
-
   const [isNowLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -120,7 +118,7 @@ const PlaceOrder = () => {
     }
   };
 
-  // Conditional rendering based on `isLoading` and `user` after hooks have been called
+  // Move conditional rendering after all hooks are called
   if (isLoading) return <p>Loading user data...</p>;
 
   if (!user) {

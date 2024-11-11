@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';  // Import js-cookie library
 import UpdateOrder from '../updateorder/updateOrder';
 
-const page = () => {
+const Page = () => {
   const { admin, isLoading } = useUser();
   const [openTracking, setOpenTracking] = useState(false);
   const [orderId, setOrderId] = useState('');
@@ -20,7 +20,7 @@ const page = () => {
   if (isLoading) {
     return <p>Loading user data...</p>;
   }
-
+  
   // if (!admin) {
   //   redirect('/');
   //   return null;
@@ -100,4 +100,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
