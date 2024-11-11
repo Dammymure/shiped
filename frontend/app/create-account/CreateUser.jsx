@@ -19,7 +19,7 @@ const CreateUser = () => {
 
     const userdetails = { email, password };
 
-    const res = await fetch('http://localhost:8000/user/signup', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/user/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userdetails),

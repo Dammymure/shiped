@@ -85,7 +85,7 @@ const PlaceOrder = () => {
         deliveryLocation: locations.deliveryLocation,
       };
 
-      const res = await fetch('http://localhost:8000/user/place-delivery', {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/user/place-delivery`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

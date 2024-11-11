@@ -28,7 +28,7 @@ const UpdateOrder = ({orderId, status, packages, user, weight, price,  }) => {
         const token = Cookies.get('admintoken');
         if (!token) throw new Error('No token found');
     
-        const res = await fetch(`http://localhost:8000/admin/order-update/${orderId}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/order-update/${orderId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

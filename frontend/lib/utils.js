@@ -19,7 +19,7 @@ export const getAdmin = async () => {
     }
 
     // Make the request to fetch admin data
-    const res = await fetch('http://localhost:8000/admin/auth', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/auth`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const getAdmin = async () => {
       throw new Error('No token found');
     }
 
-    const res = await fetch('http://localhost:8000/user/auth', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/user/auth`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export const getDeliveries = async () => {
       throw new Error('No token found');
     }
 
-    const res = await fetch('http://localhost:8000/user/deliveries', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/user/deliveries`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ export const getOrders = async () => {
       throw new Error('No token found');
     }
 
-    const res = await fetch('http://localhost:8000/admin/orders', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/orders`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ export const getOneOrder = async (id) => {  // Expect id directly, not as an obj
       throw new Error('No token found');
     }
 
-    const res = await fetch(`http://localhost:8000/admin/order/${id}`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/order/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -181,7 +181,7 @@ export const postOrder = async (formData) => {
       throw new Error('No token found');
     }
 
-    const res = await fetch('http://localhost:8000/user/place-delivery', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/user/place-delivery`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

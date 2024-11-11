@@ -33,7 +33,7 @@ const TrackOrder = () => {
     try {
       const token = Cookies.get('token');
 
-      const res = await fetch(`http://localhost:8000/user/delivery/${orderId}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/user/delivery/${orderId}`, {
         method: 'GET',
         headers: { 
           'Content-Type': 'application/json',

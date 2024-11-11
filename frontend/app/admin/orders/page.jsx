@@ -27,10 +27,10 @@ const Orders = () => {
     return <p>Loading admin data...</p>;
   }
 
-  if (!admin) {
-    redirect('/');
-    return null;
-  }
+  // if (!admin) {
+  //   redirect('/');
+  //   return null;
+  // }
   
 
   return (

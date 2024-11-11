@@ -21,10 +21,10 @@ const page = () => {
     return <p>Loading user data...</p>;
   }
 
-  if (!admin) {
-    redirect('/');
-    return null;
-  }
+  // if (!admin) {
+  //   redirect('/');
+  //   return null;
+  // }
 
 
   const handleSubmit = async (e) => {
@@ -34,7 +34,7 @@ const page = () => {
     try {
       const token = Cookies.get('token');
 
-      const res = await fetch(`http://localhost:8000/admin/order/${orderId}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/order/${orderId}`, {
         method: 'GET',
         headers: { 
           'Content-Type': 'application/json',

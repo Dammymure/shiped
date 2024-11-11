@@ -21,7 +21,7 @@ const CreateAdmin = () => {
 
     const userdetails = { email, password };
 
-    const res = await fetch('http://localhost:8000/admin/signup', {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userdetails),
