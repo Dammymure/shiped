@@ -1,40 +1,25 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/alert"
-import { RocketIcon } from "@radix-ui/react-icons"
+} from "@/components/ui/alert";
+import { RocketIcon } from "@radix-ui/react-icons";
 import MapComponent from '@/components/SelectMap';
 import { useUser } from '@/app/Provider';
 
 const PlaceOrder = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading } = useUser();  // Move the hook outside the condition
 
-  if (isLoading) {
-    return <p>Loading user data...</p>;
-  }
-
-  if (!user) {
-    redirect('/');
-    return null;  // Ensure that the component doesn't continue rendering after redirect
-  }
-
-  // SELECT LOCATION
   const [locations, setLocations] = useState({
     currentLocation: null,
     deliveryLocation: null,
   });
 
-  const handleLocationChange = (newLocations) => {
-    setLocations(newLocations);
-  };
-
-  const router = useRouter();
   const [popUp, setPopUp] = useState(false);
   const [formData, setFormData] = useState({
     destination: '',
@@ -42,13 +27,19 @@ const PlaceOrder = () => {
     price: 0,
     status: 'pending',
   });
-  const [isNowLoading, setIsLoading] = useState(false);
 
-  // Calculate total cost when packages change
+  const [isNowLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
-    const totalCost = formData.packages.reduce((total, pkg) => total + Number(pkg.weight || 0), 0) * 500;
-    setFormData(prevData => ({ ...prevData, price: totalCost }));
+    const totalCost = formData.packages.reduce(
+      (total, pkg) => total + Number(pkg.weight || 0),
+      0
+    ) * 500;
+    setFormData((prevData) => ({ ...prevData, price: totalCost }));
   }, [formData.packages]);
+
+  const handleLocationChange = (newLocations) => setLocations(newLocations);
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
@@ -57,16 +48,22 @@ const PlaceOrder = () => {
     setFormData({ ...formData, packages: updatedPackages });
   };
 
-  const handleDestinationChange = (e) => setFormData({ ...formData, destination: e.target.value });
+  const handleDestinationChange = (e) =>
+    setFormData({ ...formData, destination: e.target.value });
 
-  const addPackage = () => setFormData({ ...formData, packages: [...formData.packages, { item: 'food', weight: '' }] });
+  const addPackage = () =>
+    setFormData({
+      ...formData,
+      packages: [...formData.packages, { item: 'food', weight: '' }],
+    });
 
   const removePackage = (index) => {
-    const updatedPackages = formData.packages.filter((_, pkgIndex) => pkgIndex !== index);
+    const updatedPackages = formData.packages.filter(
+      (_, pkgIndex) => pkgIndex !== index
+    );
     setFormData({ ...formData, packages: updatedPackages });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -77,7 +74,7 @@ const PlaceOrder = () => {
 
       const orderData = {
         ...formData,
-        packages: formData.packages.map(pkg => ({
+        packages: formData.packages.map((pkg) => ({
           item: pkg.item,
           weight: Number(pkg.weight),
         })),
@@ -85,14 +82,17 @@ const PlaceOrder = () => {
         deliveryLocation: locations.deliveryLocation,
       };
 
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/user/place-delivery`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(orderData),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/user/place-delivery`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
 
       if (!res.ok) throw new Error('Failed to place order');
 
@@ -113,7 +113,6 @@ const PlaceOrder = () => {
       }, 3000);
 
       return data;
-
     } catch (error) {
       console.error('Error placing order:', error);
       setIsLoading(false);
@@ -121,16 +120,25 @@ const PlaceOrder = () => {
     }
   };
 
+  // Conditional rendering based on `isLoading` and `user` after hooks have been called
+  if (isLoading) return <p>Loading user data...</p>;
+
+  if (!user) {
+    redirect('/');
+    return null;
+  }
+
   return (
     <Sidebar user={user}>
       <div className="grid grid-cols-2 w-full">
         <div className="w-full p-4 h-full bg-light rounded-md shadow-md">
-          <div className='bg-white p-4 rounded-md'>
-            <h1 className='text-2xl'>Create your order</h1>
+          <div className="bg-white p-4 rounded-md">
+            <h1 className="text-2xl">Create your order</h1>
             <form onSubmit={handleSubmit} className="py-4 w-full h-screen mx-auto">
-              {/* Destination Input */}
               <div className="mb-4">
-                <label htmlFor="destination" className="block text-gray-700 font-semibold mb-2">Destination</label>
+                <label htmlFor="destination" className="block text-gray-700 font-semibold mb-2">
+                  Destination
+                </label>
                 <input
                   type="text"
                   id="destination"
@@ -142,19 +150,20 @@ const PlaceOrder = () => {
                 />
               </div>
 
-              {/* Package and Weight Fields */}
               {formData.packages.map((pkg, index) => (
                 <div key={index}>
                   <button
                     type="button"
                     onClick={() => removePackage(index)}
-                    className=" text-red-600 text-sm flex ml-auto cursor-pointer"
+                    className="text-red-600 text-sm flex ml-auto cursor-pointer"
                   >
                     Delete Package
                   </button>
                   <div className="mb-4 grid grid-cols-2 gap-10">
                     <div>
-                      <label htmlFor={`item-${index}`} className="block text-gray-700 font-semibold mb-2">Item</label>
+                      <label htmlFor={`item-${index}`} className="block text-gray-700 font-semibold mb-2">
+                        Item
+                      </label>
                       <select
                         id={`item-${index}`}
                         name="item"
@@ -170,7 +179,9 @@ const PlaceOrder = () => {
                       </select>
                     </div>
                     <div>
-                      <label htmlFor={`weight-${index}`} className="block text-gray-700 font-semibold mb-2">Weight</label>
+                      <label htmlFor={`weight-${index}`} className="block text-gray-700 font-semibold mb-2">
+                        Weight
+                      </label>
                       <input
                         type="number"
                         id={`weight-${index}`}
@@ -184,47 +195,32 @@ const PlaceOrder = () => {
                   </div>
                 </div>
               ))}
-              
+
               <h1>1 naira/kg: {formData.price}</h1>
-              <p onClick={addPackage} className="text-slate-800 text-center cursor-pointer p-2 rounded w-full mb-4">+ Add Another Package</p>
+              <p onClick={addPackage} className="text-slate-800 text-center cursor-pointer p-2 rounded w-full mb-4">
+                + Add Another Package
+              </p>
 
               <button type="submit" className="bg-primary text-white p-2 rounded w-full hover:bg-primary/90" disabled={isNowLoading}>
                 {isNowLoading ? <span>Processing...</span> : 'Place Order'}
               </button>
 
-              <div className="grid w-full place-items-center">
-                {popUp &&
-                  <Alert className="w-[50%]">
-                    <RocketIcon className="h-4 w-4" />
-                    <AlertTitle>Order Placed!</AlertTitle>
-                    <AlertDescription>Your order has been placed and is being processed.</AlertDescription>
-                  </Alert>
-                }
-              </div>
+              {popUp && (
+                <Alert className="w-[50%]">
+                  <RocketIcon className="h-4 w-4" />
+                  <AlertTitle>Order Placed!</AlertTitle>
+                  <AlertDescription>Your order has been placed and is being processed.</AlertDescription>
+                </Alert>
+              )}
             </form>
           </div>
         </div>
 
-        <div className='w-full h-screen bg-light p-4'>
-          <div className='bg-white p-4 rounded-md'>
-
-          <h1>Package Delivery</h1>
-          <MapComponent onLocationChange={handleLocationChange} />
+        <div className="w-full h-screen bg-light p-4">
+          <div className="bg-white p-4 rounded-md">
+            <h1>Package Delivery</h1>
+            <MapComponent onLocationChange={handleLocationChange} />
           </div>
-          {/* {locations.currentLocation && (
-            <div>
-              <h2>Current Location Coordinates:</h2>
-              <p>Latitude: {locations.currentLocation.lat}</p>
-              <p>Longitude: {locations.currentLocation.lng}</p>
-            </div>
-          )}
-          {locations.deliveryLocation && (
-            <div style={{ marginTop: '20px', textAlign: 'center' }}>
-              <h2>Delivery Location Coordinates:</h2>
-              <p>Latitude: {locations.deliveryLocation.lat}</p>
-              <p>Longitude: {locations.deliveryLocation.lng}</p>
-            </div>
-          )} */}
         </div>
       </div>
     </Sidebar>

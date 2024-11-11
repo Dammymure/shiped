@@ -1,15 +1,8 @@
-'use client';
+const TrackOrderPage = () => {
+  return <TrackOrderComponent />;
+};
 
-import React, { useState } from 'react';
-import Sidebar from '../Sidebar';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import TrackPage from '../track-order/TrackPage.jsx';
-import { redirect } from 'next/navigation';
-import Cookies from 'js-cookie';  // Import js-cookie library
-import { useUser } from '../../Provider.jsx';
-
-const TrackOrder = () => {
+const TrackOrderComponent = () => {
   const { user, isLoading } = useUser();
   const [openTracking, setOpenTracking] = useState(false);
   const [orderId, setOrderId] = useState('');
@@ -24,7 +17,6 @@ const TrackOrder = () => {
     redirect('/');
     return null;
   }
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,4 +84,4 @@ const TrackOrder = () => {
   );
 };
 
-export default TrackOrder;
+export default TrackOrderPage;
