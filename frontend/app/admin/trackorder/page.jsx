@@ -11,11 +11,11 @@ import UpdateOrder from '../updateorder/updateOrder';
 
 const Page = () => {
   const { admin, isLoading } = useUser();
-  const [openTracking, setOpenTracking] = useState(false);
-  const [orderId, setOrderId] = useState('');
-  const [isLoading1, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [orderData, setOrderData] = useState(null);
+  const [OpenTracking, setOpenTracking] = useState(false);
+  const [OrderId, setOrderId] = useState('');
+  const [IsLoading1, setIsLoading] = useState(false);
+  const [Error, setError] = useState(false);
+  const [OrderData, setOrderData] = useState(null);
   
   if (isLoading) {
     return <p>Loading user data...</p>;
@@ -34,7 +34,7 @@ const Page = () => {
     try {
       const token = Cookies.get('token');
 
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/order/${orderId}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/admin/order/${OrderId}`, {
         method: 'GET',
         headers: { 
           'Content-Type': 'application/json',
@@ -57,13 +57,13 @@ const Page = () => {
     }
   };
 
-  const totalweight = orderData?.packages?.reduce((sum, pkg) => sum + pkg.weight, 0)
+  const totalweight = OrderData?.packages?.reduce((sum, pkg) => sum + pkg.weight, 0)
 
   return (
     <Sidebar admin={admin}>
       <div className='w-screen h-screen'>
-        {openTracking ? (
-          <UpdateOrder orderId={orderData.orderId} status={orderData.status} packages={orderData.packages} user={orderData.userId.firstname} weight={totalweight} price={orderData.price}/>
+        {OpenTracking ? (
+          <UpdateOrder orderId={OrderData.orderId} status={OrderData.status} packages={OrderData.packages} user={OrderData.userId.firstname} weight={totalweight} price={OrderData.price}/>
         ) : (
           <div className='bg-white rounded-md w-full p-8 h-screen overflow-hidden'>
             <h2 className='text-2xl'>Track Order</h2>
@@ -76,20 +76,20 @@ const Page = () => {
                   type="text"
                   placeholder="Enter Order ID..."
                   onChange={(e) => setOrderId(e.target.value)}
-                  value={orderId}
+                  value={OrderId}
                 />
                 <Button
                   className="text-white h-12"
                   type="submit"
                   onClick={handleSubmit}
-                  disabled={isLoading1}
+                  disabled={IsLoading1}
                 >
-                  {isLoading1 ? 'Searching...' : 'Search'}
+                  {IsLoading1 ? 'Searching...' : 'Search'}
                 </Button>
               </div>
               <p className='text-sm text-slate-500 mt-4'>Please enter a unique reference before launching your search, system will automatically recognise the type of value.</p>
               {
-                error ? (<p className='text-red-600'> Order ID does not exist</p>):''
+                Error ? (<p className='text-red-600'> Order ID does not exist</p>):''
               }
               
             </div>

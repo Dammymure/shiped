@@ -13,53 +13,55 @@ import MapComponent from '@/components/SelectMap';
 import { useUser } from '@/app/Provider';
 
 const PlaceOrder = () => {
-  // Move the hook calls to the top level
-  const { user, isLoading } = useUser();
-  const [locations, setLocations] = useState({
+  const { user, isLoading } = useUser();  // Move the hook outside the condition
+
+  const [Locations, setLocations] = useState({
     currentLocation: null,
     deliveryLocation: null,
   });
-  const [popUp, setPopUp] = useState(false);
-  const [formData, setFormData] = useState({
+
+  const [PopUp, setPopUp] = useState(false);
+  const [FormData, setFormData] = useState({
     destination: '',
     packages: [{ item: 'food', weight: '' }],
     price: 0,
     status: 'pending',
   });
-  const [isNowLoading, setIsLoading] = useState(false);
+
+  const [IsNowLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const totalCost = formData.packages.reduce(
+    const totalCost = FormData.packages.reduce(
       (total, pkg) => total + Number(pkg.weight || 0),
       0
     ) * 500;
     setFormData((prevData) => ({ ...prevData, price: totalCost }));
-  }, [formData.packages]);
+  }, [FormData.packages]);
 
   const handleLocationChange = (newLocations) => setLocations(newLocations);
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    const updatedPackages = [...formData.packages];
+    const updatedPackages = [...FormData.packages];
     updatedPackages[index][name] = value;
-    setFormData({ ...formData, packages: updatedPackages });
+    setFormData({ ...FormData, packages: updatedPackages });
   };
 
   const handleDestinationChange = (e) =>
-    setFormData({ ...formData, destination: e.target.value });
+    setFormData({ ...FormData, destination: e.target.value });
 
   const addPackage = () =>
     setFormData({
-      ...formData,
-      packages: [...formData.packages, { item: 'food', weight: '' }],
+      ...FormData,
+      packages: [...FormData.packages, { item: 'food', weight: '' }],
     });
 
   const removePackage = (index) => {
-    const updatedPackages = formData.packages.filter(
+    const updatedPackages = FormData.packages.filter(
       (_, pkgIndex) => pkgIndex !== index
     );
-    setFormData({ ...formData, packages: updatedPackages });
+    setFormData({ ...FormData, packages: updatedPackages });
   };
 
   const handleSubmit = async (e) => {
@@ -71,13 +73,13 @@ const PlaceOrder = () => {
       if (!token) throw new Error('No token found');
 
       const orderData = {
-        ...formData,
-        packages: formData.packages.map((pkg) => ({
+        ...FormData,
+        packages: FormData.packages.map((pkg) => ({
           item: pkg.item,
           weight: Number(pkg.weight),
         })),
-        currentLocation: locations.currentLocation,
-        deliveryLocation: locations.deliveryLocation,
+        currentLocation: Locations.currentLocation,
+        deliveryLocation: Locations.deliveryLocation,
       };
 
       const res = await fetch(
@@ -118,7 +120,7 @@ const PlaceOrder = () => {
     }
   };
 
-  // Move conditional rendering after all hooks are called
+  // Conditional rendering based on `isLoading` and `user` after hooks have been called
   if (isLoading) return <p>Loading user data...</p>;
 
   if (!user) {
@@ -141,14 +143,14 @@ const PlaceOrder = () => {
                   type="text"
                   id="destination"
                   name="destination"
-                  value={formData.destination}
+                  value={FormData.destination}
                   onChange={handleDestinationChange}
                   placeholder="Enter destination"
                   className="w-full p-2 border border-gray-400 rounded focus:border-secondary focus:shadow-custom-purple focus:ring-1 focus:ring-secondary"
                 />
               </div>
 
-              {formData.packages.map((pkg, index) => (
+              {FormData.packages.map((pkg, index) => (
                 <div key={index}>
                   <button
                     type="button"
@@ -194,16 +196,16 @@ const PlaceOrder = () => {
                 </div>
               ))}
 
-              <h1>1 naira/kg: {formData.price}</h1>
+              <h1>1 naira/kg: {FormData.price}</h1>
               <p onClick={addPackage} className="text-slate-800 text-center cursor-pointer p-2 rounded w-full mb-4">
                 + Add Another Package
               </p>
 
-              <button type="submit" className="bg-primary text-white p-2 rounded w-full hover:bg-primary/90" disabled={isNowLoading}>
-                {isNowLoading ? <span>Processing...</span> : 'Place Order'}
+              <button type="submit" className="bg-primary text-white p-2 rounded w-full hover:bg-primary/90" disabled={IsNowLoading}>
+                {IsNowLoading ? <span>Processing...</span> : 'Place Order'}
               </button>
 
-              {popUp && (
+              {PopUp && (
                 <Alert className="w-[50%]">
                   <RocketIcon className="h-4 w-4" />
                   <AlertTitle>Order Placed!</AlertTitle>
