@@ -5,9 +5,9 @@ import Sidebar from '../Sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import TrackPage from '../track-order/TrackPage.jsx';
-import { useUser } from '@/app/Provider';
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';  // Import js-cookie library
+import { useUser } from '../../Provider.jsx';
 
 const TrackOrder = () => {
   const { user, isLoading } = useUser();

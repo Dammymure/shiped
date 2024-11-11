@@ -91,7 +91,7 @@ const LoginUser = () => {
           {isLoading ? 'Login...' : 'Login'}
         </Button>
       </CardFooter>
-      <p onClick={()=> router.push('/create-account')} className="cursor-pointer text-blue-700 text-sm pl-5 pb-5">Don't have an account? Create an account</p>
+      <p onClick={()=> router.push('/create-account')} className="cursor-pointer text-blue-700 text-sm pl-5 pb-5">Don&apos;t have an account? Create an account</p>
     </Card>
   );
 };

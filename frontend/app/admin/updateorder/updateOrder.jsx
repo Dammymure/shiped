@@ -119,7 +119,7 @@ const UpdateOrder = ({orderId, status, packages, user, weight, price,  }) => {
                         <h4 className='font-semibold'>Order Item</h4>
                         {
                             packages.map((pack)=>{
-                            return (<div className='py-5 flex items-center justify-between'>
+                            return (<div key={pack.id} className='py-5 flex items-center justify-between'>
                                 <div className='flex items-center gap-3'>
                                 <div className='w-20 h-20 bg-green-400 rounded-md'></div>
                                 <div>

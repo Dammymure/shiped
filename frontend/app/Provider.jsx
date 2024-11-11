@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
       }
     };
     fetchAdmin();
-  }, []);
+  },);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
       }
     };
     fetchUser();
-  }, []);
+  }, );
 
 
   const isLoading = isLoadingUser || isLoadingAdmin;
