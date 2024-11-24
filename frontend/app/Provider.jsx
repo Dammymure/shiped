@@ -4,7 +4,7 @@ import { createContext, useState, useEffect, useContext } from 'react';
 
 const UserContext = createContext();
 
-export const UserProvider = ({ children }) => {
+export async function UserProvider  ({ children }) {
   const [user, setUser] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);

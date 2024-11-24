@@ -125,7 +125,6 @@ const PlaceOrder = () => {
 
   if (!user) {
     redirect('/');
-    return null;
   }
 
   return (
