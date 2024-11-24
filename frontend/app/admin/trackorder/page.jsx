@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useUser } from '@/app/Provider';
+import { UserUser } from '@/app/Provider';
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';  // Import js-cookie library
 import UpdateOrder from '../updateorder/updateOrder';
 
 const Page = () => {
-  const { admin, isLoading } = useUser();
+  const { admin, isLoading } = UserUser();
   const [OpenTracking, setOpenTracking] = useState(false);
   const [OrderId, setOrderId] = useState('');
   const [IsLoading1, setIsLoading] = useState(false);

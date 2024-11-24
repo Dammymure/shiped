@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/avatar"
 
 import { CalendarDays } from "lucide-react"
-import { useUser } from '../Provider.jsx';
+import { UserUser } from '../Provider.jsx';
 import {
   AlertDialog,
   AlertDialogAction,

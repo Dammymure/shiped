@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../Sidebar';
 import OrdersTable from './OrderTable';
-import { useUser } from '../../Provider';
+import { UserUser } from '../../Provider';
 import { redirect } from 'next/navigation';
 import { getOrders } from '@/lib/utils';
 
 const Orders = () => {
-  const { admin, isLoading } = useUser();
+  const { admin, isLoading } = UserUser();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {

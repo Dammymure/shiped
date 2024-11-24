@@ -11,7 +11,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import DefaultWidget from '@/components/DefaultWidget'
-import { useUser } from '@/app/Provider'
+import { UserUser } from '@/app/Provider'
 import { redirect } from 'next/navigation'
 import { getDeliveries } from '@/lib/utils'
 import Advert from '@/components/Advert'
@@ -19,7 +19,7 @@ import Advert from '@/components/Advert'
 
 
 const Orders = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading } = UserUser();
   const [orders, setOrders] = useState([]);  // State for holding the orders data
 
   // Fetch orders when the component mounts

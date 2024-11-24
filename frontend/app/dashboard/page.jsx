@@ -6,13 +6,13 @@ import OrderWidget from '@/components/OrderWidget';
 import StatWidget from '@/components/StatWidget';
 import { FaBiking } from "react-icons/fa";
 import Link from 'next/link';
-import { useUser } from '../Provider';
+import { UserUser } from '../Provider';
 import { redirect } from 'next/navigation';
 import { getDeliveries } from '@/lib/utils';
 import Advert from '@/components/Advert';
 
 const Dashboard = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading } = UserUser();
   const [orders, setOrders] = useState([]);  // State for holding the orders data
 
   // Fetch orders when the component mounts

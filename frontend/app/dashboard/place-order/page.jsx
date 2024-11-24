@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/alert";
 import { RocketIcon } from "@radix-ui/react-icons";
 import MapComponent from '@/components/SelectMap';
-import { useUser } from '@/app/Provider';
+import { UserUser } from '@/app/Provider';
 
 const PlaceOrder = () => {
-  const { user, isLoading } = useUser();  // Move the hook outside the condition
+  const { user, isLoading } = UserUser();  // Move the hook outside the condition
 
   const [Locations, setLocations] = useState({
     currentLocation: null,

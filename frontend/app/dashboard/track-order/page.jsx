@@ -7,10 +7,10 @@ import { Input } from '@/components/ui/input';
 import TrackPage from '../track-order/TrackPage.jsx';
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';  // Import js-cookie library
-import { useUser } from '../../Provider.jsx';
+import { UserUser } from '../../Provider.jsx';
 
 const TrackOrder = () => {
-  const { user, isLoading } = useUser();
+  const { user, isLoading } = UserUser();
   const [openTracking, setOpenTracking] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [isLoading1, setIsLoading] = useState(false);

@@ -28,7 +28,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { useUser } from '../Provider';
+import { UserUser } from '../Provider';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
 

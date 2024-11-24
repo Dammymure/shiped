@@ -3,11 +3,11 @@ import { getOneOrder } from '@/lib/utils';
 import React, { useEffect, useState } from 'react';
 import UpdateOrder from '../../updateorder/updateOrder';
 import Sidebar from '../../Sidebar';
-import { useUser } from '@/app/Provider';
+import { UserUser } from '@/app/Provider';
 import { redirect } from 'next/navigation';
 
 const Page = ({ params: { id } }) => {
-  const { admin, isLoading } = useUser();
+  const { admin, isLoading } = UserUser();
   const [order, setOrder] = useState();
 
   useEffect(() => {
